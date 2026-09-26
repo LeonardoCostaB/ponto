@@ -1,0 +1,6 @@
+@ponto_HostAddress = http://localhost:5285
+
+GET {{ponto_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
