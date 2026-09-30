@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
+using Ponto.Api.Infra.Integrations.Discord;
 
 namespace Ponto.Api.Infra.Integrations.Tangerino;
 
@@ -9,12 +10,14 @@ public class TangerinoClient : ITangerinoClient
     private readonly HttpClient _httpClient;
     private readonly TangerinoOptions _options;
     private readonly ILogger<TangerinoClient> _logger;
+    private readonly IDiscordClient _discordClient;
 
-    public TangerinoClient(HttpClient httpClient, IOptions<TangerinoOptions> options, ILogger<TangerinoClient> logger)
+    public TangerinoClient(HttpClient httpClient, IOptions<TangerinoOptions> options, ILogger<TangerinoClient> logger, IDiscordClient discordClient)
     {
         _httpClient = httpClient;
         _options = options.Value;
         _logger = logger;
+        _discordClient = discordClient;
     }
 
     public async Task<bool> ClockIn(string employeeId, string pin, CancellationToken cancellationToken)
@@ -42,10 +45,12 @@ public class TangerinoClient : ITangerinoClient
 
             if (response.IsSuccessStatusCode)
             {
+                await _discordClient.SendMessageAsync($"User {employeeId} clocked in successfully");
                 return true;
             }
 
             _logger.LogError("Failed to clock in user {employeeId}: {StatusCode}", employeeId, response.StatusCode);
+            await _discordClient.SendMessageAsync($"Failed to clock in user {employeeId}: {response.StatusCode}");
             return false;
         }
         catch (Exception ex)
@@ -83,6 +88,7 @@ public class TangerinoClient : ITangerinoClient
             });
 
             using var httpRequest = new HttpRequestMessage(HttpMethod.Post, synchronizeUrl);
+            httpRequest.Headers.TryAddWithoutValidation("Authorization", $"Bearer {_options.Authorization}");
             httpRequest.Headers.TryAddWithoutValidation("empregador", employeeId);
             httpRequest.Headers.TryAddWithoutValidation("pin", pin);
             httpRequest.Headers.TryAddWithoutValidation("funcionarioid", interpriseId);
@@ -97,6 +103,7 @@ public class TangerinoClient : ITangerinoClient
 
             if (response.IsSuccessStatusCode)
             {
+                await _discordClient.SendMessageAsync($"User {employeeId} synchronized clock in successfully");
                 return true;
             }
 

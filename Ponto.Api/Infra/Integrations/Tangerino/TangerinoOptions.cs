@@ -8,4 +8,5 @@ public class TangerinoOptions
     public required string Origin { get; set; }
     public required string ClockInPath { get; set; }
     public required string SynchronizePath { get; set; }
+    public required string Authorization { get; set; }
 }
