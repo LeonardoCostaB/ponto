@@ -58,6 +58,10 @@ namespace ponto.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("bearerToken")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("companyId")
                         .IsRequired()
                         .HasColumnType("text");

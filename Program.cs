@@ -5,6 +5,7 @@ using Ponto.Api.Infra.Database;
 using Ponto.Api.Infra.Integrations.Discord;
 using Ponto.Api.Infra.Integrations.Tangerino;
 using Ponto.Api.Infra.Results;
+using Ponto.Api.Shared.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseMiddleware<ApiKeyMiddleware>();
 
 app.UseHttpsRedirection();
 app.MapControllers();

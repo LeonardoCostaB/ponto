@@ -8,5 +8,6 @@ public class CreateUserValidator : AbstractValidator<CreateUserCommand>
         RuleFor(x => x.EmployeeId).NotEmpty();
         RuleFor(x => x.CompanyId).NotEmpty();
         RuleFor(x => x.Pin).NotEmpty();
+        RuleFor(x => x.BearerToken).NotEmpty();
     }
 }

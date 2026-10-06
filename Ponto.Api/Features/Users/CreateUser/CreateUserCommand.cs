@@ -14,4 +14,5 @@ public class CreateUserCommand : IRequest<Result<CreateUserResponse>>
     public string EmployeeId { get; set; }
     public string CompanyId { get; set; }
     public string Pin { get; set; }
+    public string BearerToken { get; set; }
 }

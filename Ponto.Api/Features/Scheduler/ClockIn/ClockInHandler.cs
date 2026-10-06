@@ -42,12 +42,13 @@ public class ClockInHandler : IRequestHandler<ClockInCommand, List<ClockInRespon
             var employeeId = user.EmployeeId;
             var pin = user.pin;
             var interpriseId = user.companyId;
+            var bearerToken = user.bearerToken;
 
             var clockInResponse = await _tangerinoClient.ClockIn(employeeId, pin, token);
 
             if (clockInResponse)
             {
-                var synchronizeResponse = await _tangerinoClient.SicronizeClockIn(employeeId, pin, interpriseId, token);
+                var synchronizeResponse = await _tangerinoClient.SicronizeClockIn(employeeId, pin, interpriseId, bearerToken, token);
                 if (synchronizeResponse)
                 {
                     result.Add((user.Id, "Synchronize successful", true));

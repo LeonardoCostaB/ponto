@@ -60,7 +60,7 @@ public class TangerinoClient : ITangerinoClient
         }
     }
 
-    public async Task<bool> SicronizeClockIn(string employeeId, string pin, string interpriseId, CancellationToken cancellationToken)
+    public async Task<bool> SicronizeClockIn(string employeeId, string pin, string interpriseId, string bearerToken, CancellationToken cancellationToken)
     {
         try
         {
@@ -88,7 +88,7 @@ public class TangerinoClient : ITangerinoClient
             });
 
             using var httpRequest = new HttpRequestMessage(HttpMethod.Post, synchronizeUrl);
-            httpRequest.Headers.TryAddWithoutValidation("Authorization", $"Bearer {_options.Authorization}");
+            httpRequest.Headers.TryAddWithoutValidation("Authorization", $"Basic {bearerToken}");
             httpRequest.Headers.TryAddWithoutValidation("empregador", employeeId);
             httpRequest.Headers.TryAddWithoutValidation("pin", pin);
             httpRequest.Headers.TryAddWithoutValidation("funcionarioid", interpriseId);

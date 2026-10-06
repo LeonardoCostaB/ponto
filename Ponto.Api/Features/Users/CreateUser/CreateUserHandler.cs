@@ -28,7 +28,8 @@ public class CreateUserHandler : IRequestHandler<CreateUserCommand, Result<Creat
             Email = request.Email,
             EmployeeId = request.EmployeeId,
             companyId = request.CompanyId,
-            pin = request.Pin
+            pin = request.Pin,
+            bearerToken = request.BearerToken
         };
 
         await _dbContext.Users.AddAsync(user, cancellationToken);

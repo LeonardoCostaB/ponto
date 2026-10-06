@@ -8,6 +8,7 @@ public class UserEntity
     public required string EmployeeId { get; set; }
     public required string companyId { get; set; }
     public required string pin { get; set; }
+    public required string bearerToken { get; set; }
 
     public List<ClockEntity> Clocks { get; set; } = [];
 }
