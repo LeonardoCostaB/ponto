@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 namespace Ponto.Api.Features.HelloWorld;
 
 [ApiController]
