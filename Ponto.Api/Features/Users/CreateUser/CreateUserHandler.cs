@@ -1,6 +1,7 @@
 using MediatR;
-using Ponto.Api.Infra.Database;
-using Ponto.Api.Infra.Results;
+using Ponto.Domain.Entities;
+using Ponto.Infra.Database;
+using Ponto.Infra.Results;
 
 namespace Ponto.Api.Features.Users.CreateUser;
 

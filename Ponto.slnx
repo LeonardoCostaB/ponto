@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Ponto.Api/Ponto.Api.csproj" />
+  <Project Path="Ponto.Domain/Ponto.Domain.csproj" />
+  <Project Path="Ponto.Infra/Ponto.Infra.csproj" />
+  <Project Path="Ponto.Shared/Ponto.Shared.csproj" />
+</Solution>

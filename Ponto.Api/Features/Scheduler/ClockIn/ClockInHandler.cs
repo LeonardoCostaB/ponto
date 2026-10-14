@@ -1,9 +1,9 @@
 using System.Collections.Concurrent;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Ponto.Api.Infra.Database;
-using Ponto.Api.Infra.Integrations.Discord;
-using Ponto.Api.Infra.Integrations.Tangerino;
+using Ponto.Infra.Database;
+using Ponto.Infra.Integrations.Discord;
+using Ponto.Infra.Integrations.Tangerino;
 
 namespace Ponto.Api.Features.Scheduler.ClockIn;
 

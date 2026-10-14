@@ -1,7 +1,7 @@
 
 
 using MediatR;
-using Ponto.Api.Infra.Results;
+using Ponto.Infra.Results;
 
 public class CreateUserResponse
 {
