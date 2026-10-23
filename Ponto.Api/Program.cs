@@ -9,6 +9,18 @@ using Ponto.Shared.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var apiKey = builder.Configuration["ApiKey"];
+
+Console.WriteLine($"[STARTUP] ApiKey encontrada? {!string.IsNullOrEmpty(apiKey)}");
+Console.WriteLine($"[STARTUP] ConnectionString encontrada? {!string.IsNullOrEmpty(connectionString)}");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    // Força o erro imediato no log do Azure sem esperar timeout de 1 minuto
+    throw new InvalidOperationException("CRÍTICO: A ConnectionString 'DefaultConnection' não foi encontrada nas variáveis de ambiente!");
+}
+
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddProblemDetails();
@@ -32,7 +44,11 @@ builder.Services.AddHttpClient<IDiscordClient, DiscordClient>();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        npgsql => npgsql.EnableRetryOnFailure()));
+        npgsql => npgsql.EnableRetryOnFailure(
+            maxRetryCount: 3,
+            maxRetryDelay: TimeSpan.FromSeconds(5), 
+            errorCodesToAdd: new List<string> { "409" }
+        )));
 
 var app = builder.Build();
 
