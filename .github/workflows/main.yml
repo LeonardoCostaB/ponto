@@ -19,7 +19,7 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Build and Publish
-        run: dotnet publish Ponto.Api/Ponto.Api.csproj -c Release -o ./publish
+        run: dotnet publish ./Ponto.Api/Ponto.Api.csproj -c Release -o ./publish
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
