@@ -30,7 +30,9 @@ builder.Services.AddHttpClient<ITangerinoClient, TangerinoClient>();
 builder.Services.AddHttpClient<IDiscordClient, DiscordClient>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        npgsql => npgsql.EnableRetryOnFailure()));
 
 var app = builder.Build();
 
